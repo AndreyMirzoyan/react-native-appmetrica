@@ -17,13 +17,25 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.yandex.metrica.Revenue;
 import com.yandex.metrica.YandexMetrica;
+import com.yandex.metrica.ecommerce.ECommerceCartItem;
+import com.yandex.metrica.ecommerce.ECommerceEvent;
+import com.yandex.metrica.ecommerce.ECommerceOrder;
+import com.yandex.metrica.ecommerce.ECommerceProduct;
+import com.yandex.metrica.ecommerce.ECommerceReferrer;
+import com.yandex.metrica.ecommerce.ECommerceScreen;
+
+import java.util.Arrays;
+import java.util.Currency;
+
 
 public class AppMetricaModule extends ReactContextBaseJavaModule {
 
     private static final String TAG = "AppMetricaModule";
 
     private final ReactApplicationContext reactContext;
+    private String ApiKey = "";
 
     public AppMetricaModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -37,6 +49,7 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void activate(ReadableMap configMap) {
+        ApiKey = configMap.getString("apiKey");
         YandexMetrica.activate(reactContext, Utils.toYandexMetricaConfig(configMap));
         enableActivityAutoTracking();
     }
@@ -86,6 +99,65 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
         } else {
             YandexMetrica.reportEvent(eventName, attributes.toHashMap());
         }
+    }
+
+    @ReactMethod
+    public void reportRevenue(String productID, String price, ReadableMap payload) {
+        long priceLong = (long)Math.pow(Integer.parseInt(price), 6);
+        Revenue revenue = Revenue.newBuilderWithMicros(priceLong, Currency.getInstance("RUB"))
+        .withProductID(productID)
+        .withQuantity(1)
+        // Passing the OrderID parameter in the .withPayload(String payload) method to group purchases.
+        .withPayload(String.valueOf(payload.toHashMap()))
+        .build();
+        // Sending the Revenue instance using reporter.
+        YandexMetrica.getReporter(reactContext, ApiKey).reportRevenue(revenue);
+    }
+
+    @ReactMethod
+    public void reportECommerceScreen(String searchQuery, ReadableMap payload) {
+        ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, payload);
+        ECommerceEvent showScreenEvent = ECommerceEvent.showScreenEvent(screen);
+        // Sending an e-commerce event.
+        YandexMetrica.getReporter(reactContext, ApiKey).reportECommerce(showScreenEvent);
+    }
+
+    @ReactMethod
+    public void reportECommerceProductDetails(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload) {
+        ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
+        ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
+        ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
+        ECommerceEvent showProductDetailsEvent = ECommerceEvent.showProductDetailsEvent(product, referrer);
+        YandexMetrica.getReporter(reactContext, ApiKey).reportECommerce(showProductDetailsEvent);
+    }
+
+    @ReactMethod
+    public void reportECommerceCheckout(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload, String orderId) {
+        ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
+        ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
+        ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
+
+        ECommerceCartItem cartItem = new ECommerceCartItem(product, product.getOriginalPrice(), 1.0).setReferrer(referrer); // Optional.
+        // Creating an order object.
+        ECommerceOrder order = new ECommerceOrder(orderId, Arrays.asList(cartItem));
+        ECommerceEvent beginCheckoutEvent = ECommerceEvent.beginCheckoutEvent(order);
+        // Sending an e-commerce event.
+        YandexMetrica.getReporter(reactContext, ApiKey).reportECommerce(beginCheckoutEvent);
+    }
+
+    @ReactMethod
+    public void reportECommercePurchase(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload, String orderId) {
+        ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
+        ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
+        ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
+
+        ECommerceCartItem cartItem = new ECommerceCartItem(product, product.getOriginalPrice(), 1.0).setReferrer(referrer); // Optional.
+        // Creating an order object.
+        ECommerceOrder order = new ECommerceOrder(orderId, Arrays.asList(cartItem));
+
+        ECommerceEvent purchaseEvent = ECommerceEvent.purchaseEvent(order);
+        // Sending an e-commerce event.
+        YandexMetrica.getReporter(reactContext, ApiKey).reportECommerce(purchaseEvent);
     }
 
     @ReactMethod

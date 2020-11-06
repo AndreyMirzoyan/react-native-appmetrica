@@ -1,16 +1,47 @@
 {
-  "name": "react-native-appmetrica",
-  "title": "Yandex AppMetrica React Native Plugin",
-  "version": "2.0.0",
-  "description": "React Native plugin for AppMetrica analytics tool",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
+  "_from": "git://github.com/mrseahub/react-native-appmetrica.git#master",
+  "_id": "react-native-appmetrica@2.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/react-native-appmetrica",
+  "_phantomChildren": {},
+  "_requested": {
     "type": "git",
-    "url": "git+https://github.com/yandexmobile/react-native-appmetrica.git"
+    "raw": "react-native-appmetrica@git://github.com/mrseahub/react-native-appmetrica.git#master",
+    "name": "react-native-appmetrica",
+    "escapedName": "react-native-appmetrica",
+    "rawSpec": "git://github.com/mrseahub/react-native-appmetrica.git#master",
+    "saveSpec": "git://github.com/mrseahub/react-native-appmetrica.git#master",
+    "fetchSpec": "git://github.com/mrseahub/react-native-appmetrica.git",
+    "gitCommittish": "master"
   },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git://github.com/mrseahub/react-native-appmetrica.git#2dfd8540e167cd0b13220b85aa1a95d941f8b598",
+  "_spec": "react-native-appmetrica@git://github.com/mrseahub/react-native-appmetrica.git#master",
+  "_where": "/Users/mrsea/Desktop/CarPlace/mobile",
+  "author": {
+    "name": "YANDEX LLC"
+  },
+  "bugs": {
+    "url": "https://github.com/yandexmobile/react-native-appmetrica/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "The following authors have created the source code of \"react-native-appmetrica\" published and distributed by YANDEX LLC as the owner:"
+    },
+    {
+      "name": "Aliaksei Nestsiarovich",
+      "email": "alex98@yandex-team.ru"
+    }
+  ],
+  "deprecated": false,
+  "description": "React Native plugin for AppMetrica analytics tool",
+  "devDependencies": {},
+  "homepage": "https://appmetrica.yandex.com/docs",
   "keywords": [
     "yandex",
     "appmetrica",
@@ -22,13 +53,19 @@
     "react-native-ios",
     "react-native-android"
   ],
-  "author": {
-    "name": "YANDEX LLC"
-  },
   "license": "MIT",
-  "homepage": "https://appmetrica.yandex.com/docs",
+  "main": "index.js",
+  "name": "react-native-appmetrica",
   "peerDependencies": {
     "react-native": ">=0.59.0 <1.0.x"
   },
-  "devDependencies": {}
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yandexmobile/react-native-appmetrica.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "title": "Yandex AppMetrica React Native Plugin",
+  "version": "2.0.0"
 }

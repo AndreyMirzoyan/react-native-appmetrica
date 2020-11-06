@@ -8,6 +8,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import <YandexMobileMetrica/YandexMobileMetrica.h>
+#import <YandexMobileMetrica/YMMYandexMetricaReporting.h>
 
 @interface AppMetricaUtils : NSObject
 

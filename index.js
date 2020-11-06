@@ -77,38 +77,24 @@ export default {
 		AppMetrica.reportEvent(eventName, attributes);
 	},
 
-	reportRevenue(productID: string, price: number, payload: Object) {
+	reportRevenue(productID: string, price: string, payload: Object) {
 		AppMetrica.reportRevenue(productID, price, payload);
 	},
 
-	reportECommerceScreen(payload: Object) {
-		AppMetrica.reportECommerceScreen(payload);
+	reportECommerceScreen(searchQuery: string, payload: Object) {
+		AppMetrica.reportECommerceScreen(searchQuery, payload);
 	},
 
-	reportECommerceProductDetails(payload: Object) {
-		AppMetrica.reportECommerceProductDetails(payload);
+	reportECommerceProductDetails(searchQuery: string, screenPayload: Object, productID: string, price: string, productPayload: Object) {
+		AppMetrica.reportECommerceProductDetails(searchQuery, screenPayload, productID, price, productPayload);
 	},
 
-	reportECommerceCheckout(payload: Object) {
-		AppMetrica.reportECommerceCheckout(payload);
+	reportECommerceCheckout(searchQuery: string, screenPayload: Object, productID: string, price: string, productPayload: Object, orderId: string) {
+		AppMetrica.reportECommerceCheckout(searchQuery, screenPayload, productID, price, productPayload, orderId);
 	},
 
-	reportECommercePurchase(
-		initWithName: string,
-		searchQuery: string,
-		originalFiatValue: number,
-		sku: string,
-		name: string,
-		payload: Object
-	) {
-		AppMetrica.reportECommercePurchase(
-			initWithName,
-			searchQuery,
-			originalFiatValue,
-			sku,
-			name,
-			payload
-		);
+	reportECommercePurchase(searchQuery: string, screenPayload: Object, productID: string, price: string, productPayload: Object, orderId: string) {
+		AppMetrica.reportECommercePurchase(searchQuery, screenPayload, productID, price, productPayload, orderId);
 	},
 
 	reportReferralUrl(referralUrl: string) {

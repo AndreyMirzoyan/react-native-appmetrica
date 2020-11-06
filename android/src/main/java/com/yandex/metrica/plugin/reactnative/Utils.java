@@ -13,8 +13,11 @@ import android.location.Location;
 import com.facebook.react.bridge.ReadableMap;
 import com.yandex.metrica.PreloadInfo;
 import com.yandex.metrica.YandexMetricaConfig;
+import com.yandex.metrica.ecommerce.ECommerceAmount;
+import com.yandex.metrica.ecommerce.ECommercePrice;
+import com.yandex.metrica.ecommerce.ECommerceProduct;
+import com.yandex.metrica.ecommerce.ECommerceScreen;
 
-import java.util.Iterator;
 import java.util.Map;
 
 abstract class Utils {
@@ -112,5 +115,20 @@ abstract class Utils {
         }
 
         return builder.build();
+    }
+
+    static ECommerceScreen createECommerceScreen(String searchQuery, ReadableMap payload) {
+        ECommerceScreen screen = new ECommerceScreen()
+                .setSearchQuery(searchQuery)
+                .setPayload((Map)payload.toHashMap());
+        return screen;
+    }
+
+    static ECommerceProduct createECommerceProduct(String productID, String price, ReadableMap payload) {
+        ECommercePrice originalPrice = new ECommercePrice(new ECommerceAmount(Integer.parseInt(price), "RUB"));
+        ECommerceProduct product = new ECommerceProduct(productID)
+                .setPayload((Map)payload.toHashMap()) // Optional.
+                .setOriginalPrice(originalPrice);
+        return product;
     }
 }
