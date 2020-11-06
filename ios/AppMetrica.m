@@ -58,7 +58,7 @@ RCT_EXPORT_METHOD(reportRevenue:(NSString *)productID: (NSDecimalNumber *)priceV
     // Setting the OrderID parameter in the payload property to group purchases
     revenueInfo.payload = payload;
     // Sending the Revenue instance using reporter.
-    id<YMMYandexMetricaReporting> reporter = [YMMYandexMetrica reporterForApiKey:ApiKey;
+    id<YMMYandexMetricaReporting> reporter = [YMMYandexMetrica reporterForApiKey:ApiKey];
     [reporter reportRevenue:[revenueInfo copy] onFailure:^(NSError *error) {
         NSLog(@"Revenue error: %@", error);
     }];
