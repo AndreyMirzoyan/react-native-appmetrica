@@ -10,6 +10,7 @@
 #import "AppMetricaUtils.h"
 
 static NSString *const kYMMReactNativeExceptionName = @"ReactNativeException";
+static NSString *ApiKey = @"";
 
 @implementation AppMetrica
 
@@ -19,6 +20,7 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(activate:(NSDictionary *)configDict)
 {
+    ApiKey = configDict[@"apiKey"];
     [YMMYandexMetrica activateWithConfiguration:[AppMetricaUtils configurationForDictionary:configDict]];
 }
 
@@ -45,6 +47,37 @@ RCT_EXPORT_METHOD(reportAppOpen:(NSString *)deeplink)
 RCT_EXPORT_METHOD(reportError:(NSString *)message) {
     NSException *exception = [[NSException alloc] initWithName:message reason:nil userInfo:nil];
     [YMMYandexMetrica reportError:message exception:exception onFailure:NULL];
+}
+
+RCT_EXPORT_METHOD(reportRevenue:(NSString *)productID: (NSDecimalNumber *)priceValue: (NSDictionary *)payload) {
+    NSDecimalNumber *price = [NSDecimalNumber decimalNumberWithString:priceValue];
+    // Initializing the Revenue instance.
+    YMMMutableRevenueInfo *revenueInfo = [[YMMMutableRevenueInfo alloc] initWithPriceDecimal:price currency:@"RUB"];
+    revenueInfo.productID = productID;
+    revenueInfo.quantity = 1;
+    // Setting the OrderID parameter in the payload property to group purchases
+    revenueInfo.payload = payload;
+    // Sending the Revenue instance using reporter.
+    id<YMMYandexMetricaReporting> reporter = [YMMYandexMetrica reporterForApiKey:ApiKey;
+    [reporter reportRevenue:[revenueInfo copy] onFailure:^(NSError *error) {
+        NSLog(@"Revenue error: %@", error);
+    }];
+}
+
+RCT_EXPORT_METHOD(reportECommerceScreen:(NSDictionary *)payload) {
+    
+}
+
+RCT_EXPORT_METHOD(reportECommerceProductDetails:(NSDictionary *)payload) {
+    
+}
+
+RCT_EXPORT_METHOD(reportECommerceCheckout:(NSDictionary *)payload) {
+    
+}
+
+RCT_EXPORT_METHOD(reportECommercePurchase:(NSString *)initWithName:(NSString *)searchQuery: (NSDecimalNumber *)originalFiatValue: (NSString *)sku: (NSString *)name: (NSDictionary *)payload) {
+    
 }
 
 RCT_EXPORT_METHOD(reportEvent:(NSString *)eventName:(NSDictionary *)attributes)
