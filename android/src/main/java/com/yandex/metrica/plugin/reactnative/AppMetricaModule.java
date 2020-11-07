@@ -35,7 +35,6 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
     private static final String TAG = "AppMetricaModule";
 
     private final ReactApplicationContext reactContext;
-    private String ApiKey = "";
 
     public AppMetricaModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -49,7 +48,6 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void activate(ReadableMap configMap) {
-        ApiKey = configMap.getString("apiKey");
         YandexMetrica.activate(reactContext, Utils.toYandexMetricaConfig(configMap));
         enableActivityAutoTracking();
     }
@@ -111,7 +109,7 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
         .withPayload(String.valueOf(payload.toHashMap()))
         .build();
         // Sending the Revenue instance using reporter.
-        YandexMetrica.getReporter(reactContext, ApiKey).reportRevenue(revenue);
+        YandexMetrica.reportRevenue(revenue);
     }
 
     @ReactMethod
@@ -119,7 +117,7 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
         ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, payload);
         ECommerceEvent showScreenEvent = ECommerceEvent.showScreenEvent(screen);
         // Sending an e-commerce event.
-        YandexMetrica.getReporter(reactContext, ApiKey).reportECommerce(showScreenEvent);
+        YandexMetrica.reportECommerce(showScreenEvent);
     }
 
     @ReactMethod
@@ -128,7 +126,7 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
         ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
         ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
         ECommerceEvent showProductDetailsEvent = ECommerceEvent.showProductDetailsEvent(product, referrer);
-        YandexMetrica.getReporter(reactContext, ApiKey).reportECommerce(showProductDetailsEvent);
+        YandexMetrica.reportECommerce(showProductDetailsEvent);
     }
 
     @ReactMethod
@@ -142,7 +140,7 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
         ECommerceOrder order = new ECommerceOrder(orderId, Arrays.asList(cartItem));
         ECommerceEvent beginCheckoutEvent = ECommerceEvent.beginCheckoutEvent(order);
         // Sending an e-commerce event.
-        YandexMetrica.getReporter(reactContext, ApiKey).reportECommerce(beginCheckoutEvent);
+        YandexMetrica.reportECommerce(beginCheckoutEvent);
     }
 
     @ReactMethod
@@ -157,7 +155,7 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
 
         ECommerceEvent purchaseEvent = ECommerceEvent.purchaseEvent(order);
         // Sending an e-commerce event.
-        YandexMetrica.getReporter(reactContext, ApiKey).reportECommerce(purchaseEvent);
+        YandexMetrica.reportECommerce(purchaseEvent);
     }
 
     @ReactMethod

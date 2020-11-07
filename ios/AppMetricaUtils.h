@@ -9,11 +9,13 @@
 #import <CoreLocation/CoreLocation.h>
 #import <YandexMobileMetrica/YandexMobileMetrica.h>
 #import <YandexMobileMetrica/YMMYandexMetricaReporting.h>
+#import <YandexMobileMetrica/YMMECommerce.h>
 
 @interface AppMetricaUtils : NSObject
 
 + (YMMYandexMetricaConfiguration *)configurationForDictionary:(NSDictionary *)configDict;
 + (CLLocation *)locationForDictionary:(NSDictionary *)locationDict;
 + (NSString *)stringFromRequestDeviceIDError:(NSError *)error;
-
++ (YMMECommerceScreen *)createECommerceScreen:(NSString *)searchQuery payload:(NSDictionary *)payload;
++ (YMMECommerceProduct *)createECommerceProduct:(NSString *)productId price:(NSString *)price payload:(NSDictionary *)payload;
 @end

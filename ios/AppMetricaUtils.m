@@ -110,4 +110,27 @@
     return @"UNKNOWN";
 }
 
++ (YMMECommerceScreen *)createECommerceScreen:(NSString *)searchQuery payload:(NSDictionary *)payload
+{
+    YMMECommerceScreen *screen = [[YMMECommerceScreen alloc] initWithName: nil
+                                                    categoryComponents: nil
+                                                           searchQuery: searchQuery
+                                                               payload: payload];
+    return screen;
+}
+
++ (YMMECommerceProduct *)createECommerceProduct: (NSString *)productId price:(NSString *)price payload:(NSDictionary *)payload
+{
+    YMMECommerceAmount *originalFiat = [[YMMECommerceAmount alloc] initWithUnit:@"RUB" value:[NSDecimalNumber decimalNumberWithString: price]];
+    YMMECommercePrice *originalPrice = [[YMMECommercePrice alloc] initWithFiat:originalFiat internalComponents: nil];
+    YMMECommerceProduct *product = [[YMMECommerceProduct alloc] initWithSKU: productId
+                                                                          name: nil
+                                                            categoryComponents: nil
+                                                                       payload: payload
+                                                                   actualPrice: nil
+                                                                 originalPrice: originalPrice
+                                                                    promoCodes: nil];
+    return product;
+}
+
 @end
