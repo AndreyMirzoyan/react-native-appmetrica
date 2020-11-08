@@ -93,8 +93,8 @@ export default {
 		AppMetrica.reportECommerceAddCartItemEvent(searchQuery, screenPayload, productID, price, productPayload);
 	},
 
-	reportECommerceRemoveCartItemEventWithItem(searchQuery: string, screenPayload: Object, productID: string, price: string, productPayload: Object) {
-		AppMetrica.reportECommerceRemoveCartItemEventWithItem(searchQuery, screenPayload, productID, price, productPayload);
+	reportECommerceRemoveCartItemEvent(searchQuery: string, screenPayload: Object, productID: string, price: string, productPayload: Object) {
+		AppMetrica.reportECommerceRemoveCartItemEvent(searchQuery, screenPayload, productID, price, productPayload);
 	},
 
 	reportECommerceCheckout(searchQuery: string, screenPayload: Object, productID: string, price: string, productPayload: Object, orderId: string) {
