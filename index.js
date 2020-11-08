@@ -89,6 +89,14 @@ export default {
 		AppMetrica.reportECommerceProductDetails(searchQuery, screenPayload, productID, price, productPayload);
 	},
 
+	reportECommerceAddCartItemEvent(searchQuery: string, screenPayload: Object, productID: string, price: string, productPayload: Object) {
+		AppMetrica.reportECommerceAddCartItemEvent(searchQuery, screenPayload, productID, price, productPayload);
+	},
+
+	reportECommerceRemoveCartItemEventWithItem(searchQuery: string, screenPayload: Object, productID: string, price: string, productPayload: Object) {
+		AppMetrica.reportECommerceRemoveCartItemEventWithItem(searchQuery, screenPayload, productID, price, productPayload);
+	},
+
 	reportECommerceCheckout(searchQuery: string, screenPayload: Object, productID: string, price: string, productPayload: Object, orderId: string) {
 		AppMetrica.reportECommerceCheckout(searchQuery, screenPayload, productID, price, productPayload, orderId);
 	},

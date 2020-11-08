@@ -130,11 +130,30 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void reportECommerceAddCartItemEvent(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload) {
+        ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
+        ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
+        ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
+        ECommerceCartItem cartItem = new ECommerceCartItem(product, product.getOriginalPrice(), 1.0).setReferrer(referrer); // Optional.     
+        ECommerceEvent addCartItemEvent = ECommerceEvent.addCartItemEvent(cartItem);
+        YandexMetrica.reportECommerce(addCartItemEvent);
+    }
+
+    @ReactMethod
+    public void reportECommerceRemoveCartItemEvent(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload) {
+        ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
+        ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
+        ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
+        ECommerceCartItem cartItem = new ECommerceCartItem(product, product.getOriginalPrice(), 1.0).setReferrer(referrer); // Optional.
+        ECommerceEvent removeCartItemEvent = ECommerceEvent.removeCartItemEvent(cartItem1);
+        YandexMetrica..reportECommerce(removeCartItemEvent);
+    }
+
+    @ReactMethod
     public void reportECommerceCheckout(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload, String orderId) {
         ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
         ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
         ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
-
         ECommerceCartItem cartItem = new ECommerceCartItem(product, product.getOriginalPrice(), 1.0).setReferrer(referrer); // Optional.
         // Creating an order object.
         ECommerceOrder order = new ECommerceOrder(orderId, Arrays.asList(cartItem));
