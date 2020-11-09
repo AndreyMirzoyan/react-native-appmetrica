@@ -145,8 +145,8 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
         ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
         ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
         ECommerceCartItem cartItem = new ECommerceCartItem(product, product.getOriginalPrice(), 1.0).setReferrer(referrer); // Optional.
-        ECommerceEvent removeCartItemEvent = ECommerceEvent.removeCartItemEvent(cartItem1);
-        YandexMetrica..reportECommerce(removeCartItemEvent);
+        ECommerceEvent removeCartItemEvent = ECommerceEvent.removeCartItemEvent(cartItem);
+        YandexMetrica.reportECommerce(removeCartItemEvent);
     }
 
     @ReactMethod
