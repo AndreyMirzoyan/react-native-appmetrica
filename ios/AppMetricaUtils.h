@@ -17,5 +17,5 @@
 + (CLLocation *)locationForDictionary:(NSDictionary *)locationDict;
 + (NSString *)stringFromRequestDeviceIDError:(NSError *)error;
 + (YMMECommerceScreen *)createECommerceScreen:(NSString *)searchQuery payload:(NSDictionary *)payload;
-+ (YMMECommerceProduct *)createECommerceProduct:(NSString *)productId price:(NSString *)price payload:(NSDictionary *)payload;
++ (YMMECommerceProduct *)createECommerceProduct:(NSString *)productName productId:(NSString *)productId price:(NSString *)price payload:(NSDictionary *)payload;
 @end

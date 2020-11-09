@@ -124,9 +124,9 @@ abstract class Utils {
         return screen;
     }
 
-    static ECommerceProduct createECommerceProduct(String productID, String price, ReadableMap payload) {
+    static ECommerceProduct createECommerceProduct(String productId, String price, ReadableMap payload) {
         ECommercePrice originalPrice = new ECommercePrice(new ECommerceAmount(Integer.parseInt(price), "RUB"));
-        ECommerceProduct product = new ECommerceProduct(productID)
+        ECommerceProduct product = new ECommerceProduct(productId)
                 .setPayload((Map)payload.toHashMap()) // Optional.
                 .setOriginalPrice(originalPrice);
         return product;

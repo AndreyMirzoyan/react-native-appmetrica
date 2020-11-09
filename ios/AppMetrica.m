@@ -48,11 +48,11 @@ RCT_EXPORT_METHOD(reportError:(NSString *)message) {
     [YMMYandexMetrica reportError:message exception:exception onFailure:nil];
 }
 
-RCT_EXPORT_METHOD(reportRevenue:(NSString *)productID: (NSString *)priceValue: (NSDictionary *)payload) {
+RCT_EXPORT_METHOD(reportRevenue:(NSString *)productId: (NSString *)priceValue: (NSDictionary *)payload) {
     NSDecimalNumber *price = [NSDecimalNumber decimalNumberWithString:priceValue];
     // Initializing the Revenue instance.
     YMMMutableRevenueInfo *revenueInfo = [[YMMMutableRevenueInfo alloc] initWithPriceDecimal:price currency:@"RUB"];
-    revenueInfo.productID = productID;
+    revenueInfo.productID = productId;
     revenueInfo.quantity = 1;
     // Setting the OrderID parameter in the payload property to group purchases
     revenueInfo.payload = payload;
@@ -66,16 +66,16 @@ RCT_EXPORT_METHOD(reportECommerceScreen:(NSString *)searchQuery payload:(NSDicti
     [YMMYandexMetrica reportECommerce:[YMMECommerce showScreenEventWithScreen:screen] onFailure:nil];
 }
 
-RCT_EXPORT_METHOD(reportECommerceProductDetails:(NSString *)searchQuery screenPayload:(NSDictionary *)screenPayload productId:(NSString *)productId price:(NSString *)price productPayload:(NSDictionary *)productPayload) {
+RCT_EXPORT_METHOD(reportECommerceProductDetails:(NSString *)searchQuery screenPayload:(NSDictionary *)screenPayload productName:(NSString *)productName productId:(NSString *)productId price:(NSString *)price productPayload:(NSDictionary *)productPayload) {
     YMMECommerceScreen *screen = [AppMetricaUtils createECommerceScreen:searchQuery payload: screenPayload];
-    YMMECommerceProduct *product = [AppMetricaUtils createECommerceProduct: productId price:price payload: productPayload];
+    YMMECommerceProduct *product = [AppMetricaUtils createECommerceProduct:productName productId:productId price:price payload: productPayload];
     YMMECommerceReferrer *referrer = [[YMMECommerceReferrer alloc] initWithType:nil identifier:nil screen:screen];
     [YMMYandexMetrica reportECommerce:[YMMECommerce showProductDetailsEventWithProduct:product referrer:referrer] onFailure:nil];
 }
 
-RCT_EXPORT_METHOD(reportECommerceAddCartItemEvent:(NSString *)searchQuery screenPayload:(NSDictionary *)screenPayload productId:(NSString *)productId price:(NSString *)price productPayload:(NSDictionary *)productPayload) {
+RCT_EXPORT_METHOD(reportECommerceAddCartItemEvent:(NSString *)searchQuery screenPayload:(NSDictionary *)screenPayload productName:(NSString *)productName productId:(NSString *)productId price:(NSString *)price productPayload:(NSDictionary *)productPayload) {
     YMMECommerceScreen *screen = [AppMetricaUtils createECommerceScreen:searchQuery payload: screenPayload];
-    YMMECommerceProduct *product = [AppMetricaUtils createECommerceProduct: productId price:price payload: productPayload];
+    YMMECommerceProduct *product = [AppMetricaUtils createECommerceProduct:productName productId:productId price:price payload: productPayload];
     YMMECommerceReferrer *referrer = [[YMMECommerceReferrer alloc] initWithType:nil identifier:nil screen:screen];
     NSDecimalNumber *quantity = [NSDecimalNumber decimalNumberWithString:@"1"];
     YMMECommerceCartItem *cartItem = [[YMMECommerceCartItem alloc] initWithProduct: product
@@ -85,9 +85,9 @@ RCT_EXPORT_METHOD(reportECommerceAddCartItemEvent:(NSString *)searchQuery screen
     [YMMYandexMetrica reportECommerce:[YMMECommerce addCartItemEventWithItem:cartItem] onFailure:nil];
 }
 
-RCT_EXPORT_METHOD(reportECommerceRemoveCartItemEvent:(NSString *)searchQuery screenPayload:(NSDictionary *)screenPayload productId:(NSString *)productId price:(NSString *)price productPayload:(NSDictionary *)productPayload) {
+RCT_EXPORT_METHOD(reportECommerceRemoveCartItemEvent:(NSString *)searchQuery screenPayload:(NSDictionary *)screenPayload productName:(NSString *)productName productId:(NSString *)productId price:(NSString *)price productPayload:(NSDictionary *)productPayload) {
     YMMECommerceScreen *screen = [AppMetricaUtils createECommerceScreen:searchQuery payload: screenPayload];
-    YMMECommerceProduct *product = [AppMetricaUtils createECommerceProduct: productId price:price payload: productPayload];
+    YMMECommerceProduct *product = [AppMetricaUtils createECommerceProduct:productName productId:productId price:price payload: productPayload];
     YMMECommerceReferrer *referrer = [[YMMECommerceReferrer alloc] initWithType:nil identifier:nil screen:screen];
     NSDecimalNumber *quantity = [NSDecimalNumber decimalNumberWithString:@"1"];
     YMMECommerceCartItem *cartItem = [[YMMECommerceCartItem alloc] initWithProduct: product
@@ -97,9 +97,9 @@ RCT_EXPORT_METHOD(reportECommerceRemoveCartItemEvent:(NSString *)searchQuery scr
     [YMMYandexMetrica reportECommerce:[YMMECommerce removeCartItemEventWithItem:cartItem] onFailure:nil];
 }
 
-RCT_EXPORT_METHOD(reportECommerceCheckout:(NSString *)searchQuery screenPayload:(NSDictionary *)screenPayload productId:(NSString *)productId price:(NSString *)price productPayload:(NSDictionary *)productPayload orderId:(NSString *)orderId) {
+RCT_EXPORT_METHOD(reportECommerceCheckout:(NSString *)searchQuery screenPayload:(NSDictionary *)screenPayload productName:(NSString *)productName productId:(NSString *)productId price:(NSString *)price productPayload:(NSDictionary *)productPayload orderId:(NSString *)orderId) {
     YMMECommerceScreen *screen = [AppMetricaUtils createECommerceScreen:searchQuery payload: screenPayload];
-    YMMECommerceProduct *product = [AppMetricaUtils createECommerceProduct: productId price:price payload: productPayload];
+    YMMECommerceProduct *product = [AppMetricaUtils createECommerceProduct:productName productId:productId price:price payload: productPayload];
     YMMECommerceReferrer *referrer = [[YMMECommerceReferrer alloc] initWithType:nil identifier:nil screen:screen];
     NSDecimalNumber *quantity = [NSDecimalNumber decimalNumberWithString:@"1"];
     YMMECommerceCartItem *cartItem = [[YMMECommerceCartItem alloc] initWithProduct: product
@@ -113,9 +113,9 @@ RCT_EXPORT_METHOD(reportECommerceCheckout:(NSString *)searchQuery screenPayload:
     [YMMYandexMetrica reportECommerce:[YMMECommerce beginCheckoutEventWithOrder:order] onFailure:nil];
 }
 
-RCT_EXPORT_METHOD(reportECommercePurchase:(NSString *)searchQuery screenPayload:(NSDictionary *)screenPayload productId:(NSString *)productId price:(NSString *)price productPayload:(NSDictionary *)productPayload orderId:(NSString *)orderId) {
+RCT_EXPORT_METHOD(reportECommercePurchase:(NSString *)searchQuery screenPayload:(NSDictionary *)screenPayload productName:(NSString *)productName productId:(NSString *)productId price:(NSString *)price productPayload:(NSDictionary *)productPayload orderId:(NSString *)orderId) {
     YMMECommerceScreen *screen = [AppMetricaUtils createECommerceScreen:searchQuery payload: screenPayload];
-    YMMECommerceProduct *product = [AppMetricaUtils createECommerceProduct: productId price:price payload: productPayload];
+    YMMECommerceProduct *product = [AppMetricaUtils createECommerceProduct:productName productId:productId price:price payload: productPayload];
     YMMECommerceReferrer *referrer = [[YMMECommerceReferrer alloc] initWithType:nil identifier:nil screen:screen];
     NSDecimalNumber *quantity = [NSDecimalNumber decimalNumberWithString:@"1"];
     YMMECommerceCartItem *cartItem = [[YMMECommerceCartItem alloc] initWithProduct: product

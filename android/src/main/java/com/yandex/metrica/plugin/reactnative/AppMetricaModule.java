@@ -100,10 +100,10 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void reportRevenue(String productID, String price, ReadableMap payload) {
+    public void reportRevenue(String productId, String price, ReadableMap payload) {
         long priceLong = (long)Math.pow(Integer.parseInt(price), 6);
         Revenue revenue = Revenue.newBuilderWithMicros(priceLong, Currency.getInstance("RUB"))
-        .withProductID(productID)
+        .withProductID(productId)
         .withQuantity(1)
         // Passing the OrderID parameter in the .withPayload(String payload) method to group purchases.
         .withPayload(String.valueOf(payload.toHashMap()))
@@ -121,18 +121,18 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void reportECommerceProductDetails(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload) {
+    public void reportECommerceProductDetails(String searchQuery, ReadableMap screenPayload, String productName, String productId, String price, ReadableMap productPayload) {
         ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
-        ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
+        ECommerceProduct product = Utils.createECommerceProduct(productName, productId, price, productPayload);
         ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
         ECommerceEvent showProductDetailsEvent = ECommerceEvent.showProductDetailsEvent(product, referrer);
         YandexMetrica.reportECommerce(showProductDetailsEvent);
     }
 
     @ReactMethod
-    public void reportECommerceAddCartItemEvent(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload) {
+    public void reportECommerceAddCartItemEvent(String searchQuery, ReadableMap screenPayload, String productName, String productId, String price, ReadableMap productPayload) {
         ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
-        ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
+        ECommerceProduct product = Utils.createECommerceProduct(productName, productId, price, productPayload);
         ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
         ECommerceCartItem cartItem = new ECommerceCartItem(product, product.getOriginalPrice(), 1.0).setReferrer(referrer); // Optional.     
         ECommerceEvent addCartItemEvent = ECommerceEvent.addCartItemEvent(cartItem);
@@ -140,9 +140,9 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void reportECommerceRemoveCartItemEvent(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload) {
+    public void reportECommerceRemoveCartItemEvent(String searchQuery, ReadableMap screenPayload, String productName, String productId, String price, ReadableMap productPayload) {
         ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
-        ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
+        ECommerceProduct product = Utils.createECommerceProduct(productName, productId, price, productPayload);
         ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
         ECommerceCartItem cartItem = new ECommerceCartItem(product, product.getOriginalPrice(), 1.0).setReferrer(referrer); // Optional.
         ECommerceEvent removeCartItemEvent = ECommerceEvent.removeCartItemEvent(cartItem);
@@ -150,9 +150,9 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void reportECommerceCheckout(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload, String orderId) {
+    public void reportECommerceCheckout(String searchQuery, ReadableMap screenPayload, String productName, String productId, String price, ReadableMap productPayload, String orderId) {
         ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
-        ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
+        ECommerceProduct product = Utils.createECommerceProduct(productName, productId, price, productPayload);
         ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
         ECommerceCartItem cartItem = new ECommerceCartItem(product, product.getOriginalPrice(), 1.0).setReferrer(referrer); // Optional.
         // Creating an order object.
@@ -163,9 +163,9 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void reportECommercePurchase(String searchQuery, ReadableMap screenPayload, String productID, String price, ReadableMap productPayload, String orderId) {
+    public void reportECommercePurchase(String searchQuery, ReadableMap screenPayload, String productName, String productId, String price, ReadableMap productPayload, String orderId) {
         ECommerceScreen screen = Utils.createECommerceScreen(searchQuery, screenPayload);
-        ECommerceProduct product = Utils.createECommerceProduct(productID, price, productPayload);
+        ECommerceProduct product = Utils.createECommerceProduct(productName, productId, price, productPayload);
         ECommerceReferrer referrer =  new ECommerceReferrer().setScreen(screen);
 
         ECommerceCartItem cartItem = new ECommerceCartItem(product, product.getOriginalPrice(), 1.0).setReferrer(referrer); // Optional.

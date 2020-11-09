@@ -119,12 +119,12 @@
     return screen;
 }
 
-+ (YMMECommerceProduct *)createECommerceProduct: (NSString *)productId price:(NSString *)price payload:(NSDictionary *)payload
++ (YMMECommerceProduct *)createECommerceProduct:(NSString *)productName productId:(NSString *)productId price:(NSString *)price payload:(NSDictionary *)payload
 {
     YMMECommerceAmount *originalFiat = [[YMMECommerceAmount alloc] initWithUnit:@"RUB" value:[NSDecimalNumber decimalNumberWithString: price]];
     YMMECommercePrice *originalPrice = [[YMMECommercePrice alloc] initWithFiat:originalFiat internalComponents: nil];
     YMMECommerceProduct *product = [[YMMECommerceProduct alloc] initWithSKU: productId
-                                                                          name: nil
+                                                                          name: productName
                                                             categoryComponents: nil
                                                                        payload: payload
                                                                    actualPrice: nil
