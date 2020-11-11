@@ -125,8 +125,8 @@ abstract class Utils {
     }
 
     static ECommerceProduct createECommerceProduct(String productName, String productId, String price, ReadableMap payload) {
-        double priceDouble = Math.pow(Integer.parseInt(price), -6);
-        ECommercePrice originalPrice = new ECommercePrice(new ECommerceAmount(priceDouble, "RUB"));
+        long priceLong = Long.parseLong(price) * 1000000;
+        ECommercePrice originalPrice = new ECommercePrice(new ECommerceAmount(priceLong, "RUB"));
         ECommerceProduct product = new ECommerceProduct(productId)
                 .setName(productName)
                 .setPayload((Map)payload.toHashMap()) // Optional.
