@@ -101,7 +101,8 @@ public class AppMetricaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void reportRevenue(String productId, String price, ReadableMap payload) {
-        long priceLong = Long.parseLong(price) * 1000000;
+        float priceFloat = Float.parseFloat(price);
+        long priceLong = (long) (priceFloat * 1000000);
         Revenue revenue = Revenue.newBuilderWithMicros(priceLong, Currency.getInstance("RUB"))
         .withProductID(productId)
         .withQuantity(1)

@@ -125,7 +125,8 @@ abstract class Utils {
     }
 
     static ECommerceProduct createECommerceProduct(String productName, String productId, String price, ReadableMap payload) {
-        long priceLong = Long.parseLong(price) * 1000000;
+        float priceFloat = Float.parseFloat(price);
+        long priceLong = (long) (priceFloat * 1000000);
         ECommercePrice originalPrice = new ECommercePrice(new ECommerceAmount(priceLong, "RUB"));
         ECommerceProduct product = new ECommerceProduct(productId)
                 .setName(productName)
